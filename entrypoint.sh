@@ -1,4 +1,4 @@
 # Install dependencies
-ansible-galaxy install -r requirements.yml
+# ansible-galaxy install -r requirements.yml
 
 bash
