@@ -1,0 +1,50 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Install prerequisites
+    apt: name={{item}} update_cache=yes
+    with_items:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+  - name: Add Docker GPG key
+    shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
+  - name: Add Docker APT repository
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
+  - name: Install Docker
+    apt: name=docker-ce
+  - name: start docker
+    service:
+      name: docker
+      state: started
+
+  - name: Install pip
+    apt: name=python-pip
+
+  - name: install docker-py to latest
+    pip:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - docker-py
+
+  - name: Create a redis data container
+    docker_container:
+      name: redisdata
+      image: busybox
+      volumes:
+        - /data
+
+  - name: Create redis container
+    docker_container:
+      name: example-redis
+      image: redis
+      state: started
+      recreate: yes
+      exposed_ports:
+        - 6379
+      volumes_from:
+        - redisdata

@@ -2,7 +2,7 @@
 these are my slides
 
 # Demo
-start with the demo example.yaml
+start with the demo site.yml
 
 # Terms
 - Ansible Galaxy
@@ -17,4 +17,5 @@ start with the demo example.yaml
 - Variables
   - Facts
   - Secrets (Ansible Vault)
+- Templates
 
