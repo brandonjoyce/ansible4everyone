@@ -3,6 +3,7 @@ define build
 endef
 
 console:
+	vagrant up
 	$(call build)
 	docker run -v ${PWD}:/ansible -it ansible4everyone
 
