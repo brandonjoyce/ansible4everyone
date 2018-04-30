@@ -1,9 +1,45 @@
 ---
-- hosts: all
+- hosts: localhost
+  tasks:
+    - name: Clean old image tar
+      file:
+        path: example_rails.tar
+        state: absent
+    - name: Build example Rails Docker image
+      docker_image:
+        path: ./example_rails
+        force: yes
+        name: ansible4everyone_rails
+        push: false
+        archive_path: example_rails.tar
+
+- hosts: default
   become: true
   roles:
     - common
-
-- hosts: database
-  roles:
     - database
+  tasks:
+    - name: Copy image tar to server
+      copy:
+        src: example_rails.tar
+        dest: /home/vagrant/example_rails.tar
+    - name: Load image from tar
+      docker_image:
+        name: ansible4everyone_rails
+        load_path: /home/vagrant/example_rails.tar
+        push: no
+        state: present
+
+    - name: restart rails app
+      docker_container:
+        name: example-rails-app
+        image: ansible4everyone_rails
+        state: started
+        restart: yes
+        ports: 3000:3000
+        links:
+          - postgres
+        env:
+          DATABASE_URL: "postgresql://{{database.user}}:{{database.password}}@postgres:5432/example_rails"
+          SECRET_KEY_BASE: "{{rails.secret_key_base}}"
+

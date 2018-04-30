@@ -18,4 +18,5 @@ start with the demo site.yml
   - Facts
   - Secrets (Ansible Vault)
 - Templates
+  - Jinja2
 

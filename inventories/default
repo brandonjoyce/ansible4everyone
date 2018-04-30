@@ -1,0 +1,8 @@
+[default]
+192.168.33.10
+
+[database]
+192.168.33.10
+
+[rails_webservers]
+192.168.33.10

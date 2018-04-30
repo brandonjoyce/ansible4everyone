@@ -14,6 +14,8 @@ RUN apt-get update
 RUN apt-get install -y python-pip python-dev
 RUN pip install --upgrade pip
 RUN pip install --upgrade virtualenv
+RUN pip install -I pip==7.1.2
+RUN pip install docker-py
 RUN apt-get install -y ansible
 ENV ANSIBLE_HOST_KEY_CHECKING=False
 

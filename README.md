@@ -6,5 +6,7 @@ The examples are currently targeting a vagrant box I setup locally (see Vagrantf
 You'll need to have Vagrant and Docker installed, but everything else is containerized.
 ```
 make console
-make deploy
+make provision
+make deploy_rails
 ```
+

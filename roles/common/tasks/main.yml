@@ -1,4 +1,8 @@
 ---
+- name: Load secrets from vault
+  include_vars:
+    dir: secrets
+
 - name: Install prerequisites
   apt: name={{item}} update_cache=yes
   with_items:
