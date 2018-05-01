@@ -3,10 +3,7 @@ define build
 endef
 
 default:
-	ansible-playbook -i inventories/default site.yml --vault-password-file=.vault_password $(ANSIBLE_OPTIONS)
-
-build:
-	$(call build)
+	ansible-playbook -i inventories/default site.yml --vault-password-file=.vault_password --skip-tags "rebuild" $(ANSIBLE_OPTIONS)
 
 console:
 	vagrant up

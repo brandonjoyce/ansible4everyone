@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  tags:
+    - rebuild
   tasks:
     - name: Clean old image tar
       file:
